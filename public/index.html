@@ -18,13 +18,31 @@
         const response = await fetch('http://localhost:3005/images').then(response =>
           response.json(),
         )
+        console.log('RESPONSE', response)
+
         const imagesElem = document.querySelector('.images')
         imagesElem.innerHTML = ''
         response.forEach(image => {
-          const img = document.createElement('img')
-          img.src = image.filePath
-          img.height = '200'
-          imagesElem.appendChild(img)
+          console.log('IMAGE3', image.filePath)
+
+          if (!Array.isArray(image.filePath)) {
+            const img = document.createElement('img')
+            img.src = image.filePath
+            img.height = '200'
+            imagesElem.appendChild(img)
+            return
+          }
+          const paths = image.filePath
+          paths.forEach(path => {
+            const img = document.createElement('img')
+            img.src = path
+            img.height = '200'
+            imagesElem.appendChild(img)
+          })
+
+          // img.src = image.filePath[1]
+          // img.height = '200'
+          // imagesElem.appendChild(img)
         })
       }
       window.onload = loadImages

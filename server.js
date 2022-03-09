@@ -24,6 +24,7 @@ MongoClient.connect(DB_HOST, {
 
 // aws credentials..
 const s3 = new aws.S3({ apiVersion: '2006-03-01' })
+// const storage=
 
 const upload = multer({
   storage: multerS3({
@@ -42,12 +43,14 @@ const upload = multer({
 
 app.use(express.static('public'))
 
-app.post('/upload', upload.single('appImage'), (req, res) => {
+app.post('/upload', upload.array('appImage'), (req, res) => {
   const imageCollection = req.app.locals.imageCollection
 
   console.log('IMAGECollection', req.app.locals)
-  console.log('FILE IN', req.file)
-  const uploaded = req.file.location
+  //   console.log('FILE IN', req.file)
+  console.log('FILES IN', req.files)
+  //   const uploaded = req.file.location
+  const uploaded = req.files.map(file => file.location)
   console.log(req.uploaded)
   imageCollection.insert({ filePath: uploaded }).then(result => {
     return res.json({ status: 'OK', ...result })
@@ -56,11 +59,13 @@ app.post('/upload', upload.single('appImage'), (req, res) => {
 
 app.get('/images', (req, res) => {
   const imageCollection = req.app.locals.imageCollection
+  console.log('ImageCollection2', imageCollection)
   imageCollection
     .find({})
     .toArray()
     .then(images => {
       const paths = images.map(({ filePath }) => ({ filePath }))
+      console.log('PATH', paths)
       return res.json(paths)
     })
 })
