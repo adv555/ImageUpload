@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload to S3</title>
+  </head>
+  <body>
+    <h1>File Upload to S3</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="appImage" multiple />
+      <button type="submit">SUBMIT</button>
+      <div class="images"></div>
+    </form>
+    <script>
+      const loadImages = async () => {
+        const response = await fetch('http://localhost:3005/images').then(response =>
+          response.json(),
+        )
+        const imagesElem = document.querySelector('.images')
+        imagesElem.innerHTML = ''
+        response.forEach(image => {
+          const img = document.createElement('img')
+          img.src = image.filePath
+          img.height = '200'
+          imagesElem.appendChild(img)
+        })
+      }
+      window.onload = loadImages
+    </script>
+  </body>
+</html>

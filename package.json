@@ -1,0 +1,22 @@
+{
+  "name": "ImageUpload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "adv555 <adv55577@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1088.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.4",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "uuid": "^8.3.2"
+  }
+}
